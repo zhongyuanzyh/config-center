@@ -1,11 +1,7 @@
 package controller
 
 import (
-	"github.com/ghodss/yaml"
-	//	"github.com/spf13/viper"
-	"encoding/json"
 	"github.com/valyala/fasthttp"
-	"github.com/zhongyuanzyh/config-center/extend/conf"
 	"log"
 )
 
@@ -23,39 +19,5 @@ func Nacos(ctx *fasthttp.RequestCtx) {
 	if status != fasthttp.StatusOK {
 		log.Println("请求没有成功：", status)
 	}
-	//	viper.SetConfigType("YAML")
-	//	err = viper.ReadConfig(bytes.NewBuffer(resp))
-	//	if err != nil {
-	//		fmt.Println(err)
-	//	}
-	//	viper.UnmarshalKey("logging", Logs)
-	j, err := yaml.YAMLToJSON(resp)
-	if err != nil {
-		log.Println("yamltojson错误", err.Error())
-	}
-	//fmt.Printf("%v", string(j))
-	configYaml := &conf.ConfigYaml{}
-	//logConf := &conf.Log{}
-	//mybatisConf := &conf.MyBatis{}
-
-	json.Unmarshal(j, configYaml)
-	//json.Unmarshal(j, logConf)
-	//json.Unmarshal(j, mybatisConf)
-	//修改应该是post，而不是在get里面这个和nacos那边的api要保持一致
-	//l.Logging.Level.Io.Swagger.Models.Parameters.AbstractSerializableParameter = "info"
-
-	//fmt.Printf("%+v", *l)
-	jByteAlll, _ := json.Marshal(configYaml)
-	//jByteLog, _ := json.Marshal(logConf)
-	//jByteBatis, _ := json.Marshal(mybatisConf)
-	//fmt.Println(string(jb))
-	yByteAll, _ := yaml.JSONToYAML(jByteAlll)
-	//yByteLog, _ := yaml.JSONToYAML(jByteLog)
-	//yByteBatis, _ := yaml.JSONToYAML(jByteBatis)
-
-	ctx.Write(yByteAll)
-	//log.Println("以上是全部配置模式")
-	//ctx.Write(resp)
-	//ctx.Write(yByteLog)
-	//ctx.Write(yByteBatis)
+	ctx.Write(resp)
 }
