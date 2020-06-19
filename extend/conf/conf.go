@@ -1,5 +1,6 @@
 package conf
 
+//Log相关的字段
 type Log struct {
 	Logging Levels `json:"logging"`
 }
@@ -23,4 +24,20 @@ type Parameterss struct {
 }
 type AbstractSerializableParameters struct {
 	AbstractSerializableParameter string `json:"AbstractSerializableParameter"`
+}
+
+//mybatis相关的字段
+type MyBatis struct {
+	MybatisPlus GlobalConfigs `json:"mybatis-plus"`
+}
+type GlobalConfigs struct {
+	GlobalConfig    DbConfigs `json:"global-config"`
+	MapperLocations string    `json:"mapper-locations"`
+}
+type DbConfigs struct {
+	DbConfig DbConfigDetail `json:"db-config"`
+}
+type DbConfigDetail struct {
+	LogicDeleteValue    int `json:"logic-delete-value"`
+	LogicNotDeleteValue int `json:"logic-not-delete-value"`
 }

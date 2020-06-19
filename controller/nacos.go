@@ -34,16 +34,21 @@ func Nacos(ctx *fasthttp.RequestCtx) {
 		log.Println("yamltojson错误", err.Error())
 	}
 	//fmt.Printf("%v", string(j))
-	l := &conf.Log{}
+	logConf := &conf.Log{}
+	mybatisConf := &conf.MyBatis{}
 
-	json.Unmarshal(j, l)
+	json.Unmarshal(j, logConf)
+	json.Unmarshal(j, mybatisConf)
 	//修改应该是post，而不是在get里面这个和nacos那边的api要保持一致
 	//l.Logging.Level.Io.Swagger.Models.Parameters.AbstractSerializableParameter = "info"
 
 	//fmt.Printf("%+v", *l)
-	jb, _ := json.Marshal(l)
+	jByteLog, _ := json.Marshal(logConf)
+	jByteBatis, _ := json.Marshal(mybatisConf)
 	//fmt.Println(string(jb))
-	yb, _ := yaml.JSONToYAML(jb)
+	yByteLog, _ := yaml.JSONToYAML(jByteLog)
+	yByteBatis, _ := yaml.JSONToYAML(jByteBatis)
 
-	ctx.Write(yb)
+	ctx.Write(yByteLog)
+	ctx.Write(yByteBatis)
 }
