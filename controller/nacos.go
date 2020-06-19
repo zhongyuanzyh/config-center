@@ -34,21 +34,28 @@ func Nacos(ctx *fasthttp.RequestCtx) {
 		log.Println("yamltojson错误", err.Error())
 	}
 	//fmt.Printf("%v", string(j))
-	logConf := &conf.Log{}
-	mybatisConf := &conf.MyBatis{}
+	configYaml := &conf.ConfigYaml{}
+	//logConf := &conf.Log{}
+	//mybatisConf := &conf.MyBatis{}
 
-	json.Unmarshal(j, logConf)
-	json.Unmarshal(j, mybatisConf)
+	json.Unmarshal(j, configYaml)
+	//json.Unmarshal(j, logConf)
+	//json.Unmarshal(j, mybatisConf)
 	//修改应该是post，而不是在get里面这个和nacos那边的api要保持一致
 	//l.Logging.Level.Io.Swagger.Models.Parameters.AbstractSerializableParameter = "info"
 
 	//fmt.Printf("%+v", *l)
-	jByteLog, _ := json.Marshal(logConf)
-	jByteBatis, _ := json.Marshal(mybatisConf)
+	jByteAlll, _ := json.Marshal(configYaml)
+	//jByteLog, _ := json.Marshal(logConf)
+	//jByteBatis, _ := json.Marshal(mybatisConf)
 	//fmt.Println(string(jb))
-	yByteLog, _ := yaml.JSONToYAML(jByteLog)
-	yByteBatis, _ := yaml.JSONToYAML(jByteBatis)
+	yByteAll, _ := yaml.JSONToYAML(jByteAlll)
+	//yByteLog, _ := yaml.JSONToYAML(jByteLog)
+	//yByteBatis, _ := yaml.JSONToYAML(jByteBatis)
 
-	ctx.Write(yByteLog)
-	ctx.Write(yByteBatis)
+	ctx.Write(yByteAll)
+	//log.Println("以上是全部配置模式")
+	//ctx.Write(resp)
+	//ctx.Write(yByteLog)
+	//ctx.Write(yByteBatis)
 }
