@@ -37,7 +37,8 @@ func Nacos(ctx *fasthttp.RequestCtx) {
 	l := &conf.Log{}
 
 	json.Unmarshal(j, l)
-	l.Logging.Level.Io.Swagger.Models.Parameters.AbstractSerializableParameter = "info"
+	//修改应该是post，而不是在get里面这个和nacos那边的api要保持一致
+	//l.Logging.Level.Io.Swagger.Models.Parameters.AbstractSerializableParameter = "info"
 
 	//fmt.Printf("%+v", *l)
 	jb, _ := json.Marshal(l)
