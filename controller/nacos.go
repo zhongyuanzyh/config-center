@@ -1,8 +1,12 @@
 package controller
 
 import (
-	"github.com/valyala/fasthttp"
+	//"encoding/json"
+	//"fmt"
 	"log"
+
+	//"github.com/ghodss/yaml"
+	"github.com/valyala/fasthttp"
 )
 
 var url = "http://nacos.ryanzhong.com"
@@ -22,8 +26,14 @@ func NacosGet(ctx *fasthttp.RequestCtx) {
 	if status != fasthttp.StatusOK {
 		log.Println("请求没有成功：", status)
 	}
+	//var respBody interface{}
+	//t, _ := yaml.YAMLToJSON(resp)
+	//json.Unmarshal(t, &respBody)
+	//	log.Println(respBody)
+	//fmt.Printf("%+v", respBody)
+
 	ctx.Write(resp)
-	log.Println(content)
+	//log.Println(content)
 }
 
 // NacosPost Post方式修改配置
