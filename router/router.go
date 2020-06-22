@@ -15,7 +15,8 @@ var routerPost = map[string]handler{
 }
 
 var routerGet = map[string]handler{
-	"/nacos": controller.NacosGet,
+	"/nacos":         controller.NacosGet,
+	"/nacos/configs": controller.NacosGetConigNameAll,
 }
 var Router = fasthttprouter.New()
 

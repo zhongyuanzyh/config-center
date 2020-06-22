@@ -1,12 +1,13 @@
 package controller
 
 import (
-	//"encoding/json"
+	"encoding/json"
 	//"fmt"
 	"log"
 
 	//"github.com/ghodss/yaml"
 	"github.com/valyala/fasthttp"
+	"github.com/zhongyuanzyh/config-center/extend/db"
 )
 
 var url = "http://nacos.ryanzhong.com"
@@ -53,5 +54,28 @@ func NacosPost(ctx *fasthttp.RequestCtx) {
 	if status != fasthttp.StatusOK {
 		log.Println("请求没有成功：", status)
 	}
+	ctx.Write(resp)
+}
+
+// NacosGetConfigNameAll获取nacos中所有的配置名
+func NacosGetConigNameAll(ctx *fasthttp.RequestCtx) {
+	rows, err := db.MySqlPool.Query("select data_id from config_info")
+	if err != nil {
+		log.Println("nacos配置数据库查询出错", err)
+	}
+	var count int = 1
+	var configs map[int]string
+	configs = make(map[int]string)
+	for rows.Next() {
+		var configName string
+		rows.Scan(&configName)
+		configs[count] = configName
+		count++
+		log.Printf("nacos配置名是：%s", configName)
+	}
+	for k, v := range configs {
+		log.Println(k, v)
+	}
+	resp, _ := json.Marshal(configs)
 	ctx.Write(resp)
 }
